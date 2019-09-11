@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/searchReposFragment">
+
+    <fragment
+        android:id="@+id/searchReposFragment"
+        android:name="com.albertobecerra.githubrepos.searchrepos.SearchReposFragment"
+        android:label="SearchReposFragment" >
+        <action
+            android:id="@+id/action_searchReposFragment_to_listReposFragment2"
+            app:destination="@id/listReposFragment2"
+            app:popUpTo="@+id/searchReposFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listReposFragment2"
+        android:name="com.albertobecerra.githubrepos.listrepos.ListReposFragment"
+        android:label="ListReposFragment" />
+</navigation>

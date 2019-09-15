@@ -12,10 +12,15 @@
         <action
             android:id="@+id/action_searchReposFragment_to_listReposFragment2"
             app:destination="@id/listReposFragment2"
-            app:popUpTo="@+id/searchReposFragment" />
+            app:popUpTo="@+id/searchReposFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/listReposFragment2"
         android:name="com.albertobecerra.githubrepos.listrepos.ListReposFragment"
-        android:label="ListReposFragment" />
+        android:label="ListReposFragment">
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

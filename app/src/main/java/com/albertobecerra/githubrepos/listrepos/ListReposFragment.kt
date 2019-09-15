@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.albertobecerra.githubrepos.R
 import com.albertobecerra.githubrepos.databinding.ListReposBinding
-import com.albertobecerra.githubrepos.model.Repository
 
 class ListReposFragment : Fragment() {
 
@@ -20,16 +23,23 @@ class ListReposFragment : Fragment() {
             container,
             false
         )
+        val viewModel = ViewModelProviders.of(this).get(ListReposViewModel::class.java)
+        val repositoryOwnerName = ListReposFragmentArgs.fromBundle(requireArguments()).name
         val adapter = RepositoryListAdapter()
-        adapter.submitList(dummyRepos())
         binding.repositoriesList.adapter = adapter
-        return binding.root
-    }
+        viewModel.getRepositories(repositoryOwnerName)
 
-    fun dummyRepos() : List<Repository> {
-        val repository = Repository(1, "Project name", "Project Description",
-            10, 5, 20)
-        return listOf(repository)
+        viewModel.repositoriesList.observe(this, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigateUp()
+        }
+
+        return binding.root
     }
 
 }

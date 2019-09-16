@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/searchReposFragment"
         android:name="com.albertobecerra.githubrepos.searchrepos.SearchReposFragment"
-        android:label="SearchReposFragment" >
+        android:label="Search for user's repositories">
         <action
             android:id="@+id/action_searchReposFragment_to_listReposFragment2"
             app:destination="@id/listReposFragment2"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/listReposFragment2"
         android:name="com.albertobecerra.githubrepos.listrepos.ListReposFragment"
-        android:label="ListReposFragment">
+        android:label="Repositories of the user">
         <argument
             android:name="name"
             app:argType="string" />

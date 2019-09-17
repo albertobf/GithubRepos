@@ -38,6 +38,13 @@ class ListReposFragment : Fragment() {
             }
         })
 
+        viewModel.error.observe(this, Observer {
+            it?.let {
+                binding.error = it
+                binding.repositoryListError.visibility = View.VISIBLE
+            }
+        })
+
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigateUp()
         }

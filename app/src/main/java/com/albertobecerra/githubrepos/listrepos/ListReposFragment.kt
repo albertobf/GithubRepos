@@ -34,6 +34,7 @@ class ListReposFragment : Fragment() {
 
         viewModel.repositoriesList.observe(this, Observer {
             it?.let {
+                binding.progressBar.visibility = View.GONE
                 if(it.isSuccessful) {
                     if(it.body().isNullOrEmpty()) {
                         binding.error = "The user doesn't have any repository"

@@ -1,6 +1,5 @@
 package com.albertobecerra.githubrepos.listrepos
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,27 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.albertobecerra.githubrepos.model.Repository
 import com.albertobecerra.githubrepos.repository.GHRepositoriesRepository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class ListReposViewModel : ViewModel() {
     val repository = GHRepositoriesRepository()
 
-    private val _repositoriesList = MutableLiveData<List<Repository>>()
-    val repositoriesList : LiveData<List<Repository>>
+    private val _repositoriesList = MutableLiveData<Response<List<Repository>>>()
+    val repositoriesList : LiveData<Response<List<Repository>>>
         get() = _repositoriesList
-
-    private val _error = MutableLiveData<String>()
-    val error : LiveData<String>
-        get() = _error
 
     fun getRepositories(repositoryOwnerName: String) {
         viewModelScope.launch {
-            try {
-                val result = repository.getUserRepositories(repositoryOwnerName)
-                _repositoriesList.postValue(result)
-            } catch (e: Exception) {
-                Log.d("ListReposViewModel", e.message)
-                _error.postValue("Owner doesn't exist")
-            }
+            _repositoriesList.postValue(repository.getUserRepositories(repositoryOwnerName))
         }
     }
 }

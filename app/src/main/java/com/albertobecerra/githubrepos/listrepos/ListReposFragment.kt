@@ -34,14 +34,17 @@ class ListReposFragment : Fragment() {
 
         viewModel.repositoriesList.observe(this, Observer {
             it?.let {
-                adapter.submitList(it)
-            }
-        })
-
-        viewModel.error.observe(this, Observer {
-            it?.let {
-                binding.error = it
-                binding.repositoryListError.visibility = View.VISIBLE
+                if(it.isSuccessful) {
+                    if(it.body().isNullOrEmpty()) {
+                        binding.error = "The user doesn't have any repository"
+                        binding.repositoryListError.visibility = View.VISIBLE
+                    } else {
+                        adapter.submitList(it.body())
+                    }
+                } else {
+                    binding.error = "An error has occurred"
+                    binding.repositoryListError.visibility = View.VISIBLE
+                }
             }
         })
 

@@ -11,10 +11,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.albertobecerra.githubrepos.App
 import com.albertobecerra.githubrepos.R
 import com.albertobecerra.githubrepos.databinding.ListReposBinding
+import javax.inject.Inject
 
 class ListReposFragment : Fragment() {
+
+    @Inject
+    lateinit var listReposViewModelFactory: ListReposViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,7 +29,9 @@ class ListReposFragment : Fragment() {
             container,
             false
         )
-        val viewModel = ViewModelProviders.of(this).get(ListReposViewModel::class.java)
+        val app = requireActivity().application as App
+        app.component.inject(this)
+        val viewModel = ViewModelProviders.of(this, listReposViewModelFactory).get(ListReposViewModel::class.java)
         val repositoryOwnerName = ListReposFragmentArgs.fromBundle(requireArguments()).name
         val adapter = RepositoryListAdapter()
         val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
